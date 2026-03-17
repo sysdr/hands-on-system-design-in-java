@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Feed Service Dashboard</title>
+  <style>
+    body { font-family: system-ui, sans-serif; margin: 2rem; max-width: 640px; }
+    h1 { margin-top: 0; }
+    .metric { background: #f0f4f8; padding: 1rem; margin: 0.5rem 0; border-radius: 8px; }
+    .metric strong { display: inline-block; min-width: 12rem; }
+    .metric .value { font-size: 1.25rem; }
+    .zero { color: #c00; }
+    .ok { color: #080; }
+    .note { margin-top: 1.5rem; color: #666; font-size: 0.9rem; }
+  </style>
+</head>
+<body>
+  <h1>Feed Service metrics</h1>
+  <p>Values are updated when <code>run-demo.sh</code> runs. They should not stay zero after a successful demo.</p>
+  <div class="metric"><strong>Feed requests:</strong> <span class="value" id="feed_requests">—</span></div>
+  <div class="metric"><strong>Cache hits:</strong> <span class="value" id="cache_hits">—</span></div>
+  <div class="metric"><strong>Cache misses:</strong> <span class="value" id="cache_misses">—</span></div>
+  <div class="metric"><strong>Last demo run:</strong> <span class="value" id="last_run">—</span></div>
+  <div class="metric"><strong>Server:</strong> <span class="value" id="server">—</span></div>
+  <div class="note" id="note"></div>
+  <script>
+    (function() {
+      var data = DASHBOARD_METRICS_JSON;
+      function set(id, text, isZero) {
+        var el = document.getElementById(id);
+        if (!el) return;
+        el.textContent = text;
+        el.classList.remove("zero", "ok");
+        if (isZero) el.classList.add("zero"); else el.classList.add("ok");
+      }
+      if (data && typeof data.feed_requests !== "undefined") {
+        set("feed_requests", data.feed_requests, data.feed_requests === 0);
+        set("cache_hits", data.cache_hits, data.cache_hits === 0);
+        set("cache_misses", data.cache_misses, data.cache_misses === 0);
+        set("last_run", data.last_demo_run || "—", false);
+        set("server", data.server || "—", false);
+        document.getElementById("note").textContent = (data.feed_requests === 0 && data.cache_hits === 0 && data.cache_misses === 0)
+          ? "Run run-demo.sh while the server is up to populate metrics."
+          : "Metrics updated from last demo run.";
+      } else {
+        document.getElementById("note").textContent = "No metrics yet. Run run-demo.sh first (with server running).";
+      }
+    })();
+  </script>
+</body>
+</html>

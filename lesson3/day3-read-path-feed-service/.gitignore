@@ -1,0 +1,32 @@
+# Build and runtime
+target/
+build/
+*.class
+*.jar
+*.log
+
+# Local JDK (optional)
+.jdk/
+
+# Data and generated
+data/
+dashboard_out.html
+
+# IDE
+.idea/
+*.iml
+out/
+.vscode/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Env and secrets
+.env
+.env.local
+*.pem
+*.key
+
+# Logs
+setup_log.txt

@@ -1,0 +1,11 @@
+# Day 3 Read Path – Feed Service – environment requirements
+
+# JDK 21+ (for virtual threads / Project Loom)
+#   apt: openjdk-21-jdk
+#   Or extract Eclipse Temurin JDK into .jdk/ in this directory
+
+# curl – for run-demo.sh and run-tests.sh
+#   apt: curl
+
+# Python 3 (optional) – for view-dashboard.sh and serve-dashboard.sh
+#   Usually pre-installed on Linux/macOS

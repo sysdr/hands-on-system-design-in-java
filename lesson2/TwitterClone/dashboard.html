@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>TwitterClone Dashboard</title>
+  <style>
+    body { font-family: system-ui, sans-serif; margin: 2rem; max-width: 640px; }
+    h1 { margin-top: 0; }
+    .metric { background: #f0f4f8; padding: 1rem; margin: 0.5rem 0; border-radius: 8px; }
+    .metric strong { display: inline-block; min-width: 12rem; }
+    .metric .value { font-size: 1.25rem; }
+    .zero { color: #c00; }
+    .ok { color: #080; }
+    .note { margin-top: 1.5rem; color: #666; font-size: 0.9rem; }
+  </style>
+</head>
+<body>
+  <h1>TwitterClone metrics</h1>
+  <p>Values are updated when <code>run-demo.sh</code> runs. They should not stay zero after a successful demo.</p>
+  <div class="metric"><strong>Tweet count:</strong> <span class="value" id="tweet_count">—</span></div>
+  <div class="metric"><strong>Tweets posted (this demo):</strong> <span class="value" id="tweets_posted">—</span></div>
+  <div class="metric"><strong>Tweets read (this demo):</strong> <span class="value" id="tweets_read">—</span></div>
+  <div class="metric"><strong>Last demo run:</strong> <span class="value" id="last_run">—</span></div>
+  <div class="metric"><strong>Server:</strong> <span class="value" id="server">—</span></div>
+  <div class="note" id="note"></div>
+  <script>
+    (function() {
+      var data = DASHBOARD_METRICS_JSON;
+      function set(id, text, isZero) {
+        var el = document.getElementById(id);
+        if (!el) return;
+        el.textContent = text;
+        el.classList.remove('zero', 'ok');
+        if (isZero) el.classList.add('zero'); else el.classList.add('ok');
+      }
+      if (data && typeof data.tweet_count !== 'undefined') {
+        set('tweet_count', data.tweet_count, data.tweet_count === 0);
+        set('tweets_posted', data.tweets_posted_this_demo, data.tweets_posted_this_demo === 0);
+        set('tweets_read', data.tweets_read_this_demo, data.tweets_read_this_demo === 0);
+        set('last_run', data.last_demo_run || '—', false);
+        set('server', data.server || '—', false);
+        document.getElementById('note').textContent = data.tweet_count === 0
+          ? 'Run run-demo.sh while the server is up to populate metrics.'
+          : 'Metrics updated from last demo run.';
+      } else {
+        document.getElementById('note').textContent = 'No metrics yet. Run run-demo.sh first (with server running).';
+      }
+    })();
+  </script>
+</body>
+</html>

@@ -1,0 +1,9 @@
+# Local JDK (optional; setup.sh can use .jdk/jdk-* if no system JDK)
+.jdk/
+# Build outputs
+target/
+# Runtime data
+data/
+# Generated dashboard view
+dashboard_out.html
+Dockerfile

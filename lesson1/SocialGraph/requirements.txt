@@ -1,0 +1,2 @@
+# No Python dependencies required for this Java project.
+# Add Python packages here if you introduce any tooling or scripts.

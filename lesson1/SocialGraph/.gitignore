@@ -1,0 +1,25 @@
+# Java/Gradle
+build/
+.gradle/
+*.class
+*.log
+
+# IDE
+.idea/
+*.iml
+out/
+.vscode/
+
+# Python
+venv/
+.venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+
+# Node
+node_modules/
+
+# OS
+.DS_Store
+Thumbs.db
